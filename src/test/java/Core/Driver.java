@@ -2,26 +2,51 @@ package Core;
 
 import Enull.Browser;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+
 public class Driver {
     private static WebDriver driver;
     private static WebDriverWait wait;
+    private static String nomeCenario;
+    private static File diretorio;
+    private static int numPrint;
 
+    public static File getDiretorio() {
+        return diretorio;
+    }
+
+    public static void setNomeCenario(String nomeCenario) {
+        Driver.nomeCenario = nomeCenario;
+    }
+    public static void criaDiretorio(){
+        String caminho = "src/test/resources/evidencias";
+        diretorio = new File(caminho+"/"+nomeCenario);
+        diretorio.mkdir();
+        numPrint=1;
+    }
+public static void printScreen(String passo) throws IOException {
+        numPrint ++;
+        String caminho = diretorio.getPath()+"/"+numPrint+"-"+passo+".png";
+        File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+    FileUtils.copyFile(file, new File(caminho));
+
+}
     public Driver(Browser navegador) {
         switch (navegador) {
             case CHROME:
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+                starChome();
                 break;
             case EDGE:
-                WebDriverManager.edgedriver().setup();
-                driver = new EdgeDriver();
+                statEdge();
                 break;
 
         }
@@ -30,6 +55,20 @@ public class Driver {
         driver.get("https://advantageonlineshopping.com/#/");
 
 
+    }
+
+    private static void statEdge() {
+        WebDriverManager.edgedriver().setup();
+        driver = new EdgeDriver();
+    }
+
+    private static void starChome() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        boolean headless = Boolean.parseBoolean(System.getProperty("headless"));
+        chromeOptions.setHeadless(headless);
+         driver = new ChromeDriver(chromeOptions);
+         driver.manage().window().setSize(new Dimension(1280,720));
     }
 
     public static WebDriver getDriver() {

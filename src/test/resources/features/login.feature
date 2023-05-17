@@ -29,9 +29,9 @@ Funcionalidade: Login
     Quando for realizado o clique no botao sign in
     Entao deve ser possivel logar no sistema
     Exemplos:
-      | identificacao       | usuario      | senha   | remember |
-      | campos obrigatorios | misericordia | Ieda123 | false    |
-      | com todos os campos | misericordia | Ieda123 | false    |
+      | identificacao       | usuario   | senha   | remember |
+      | campos obrigatorios | marcosval | Ieda321 | false    |
+      | com todos os campos | marcosval | Ieda321 | false    |
 
   @loginComErro
   Esquema do Cenario: Realizar login com <identificacao>
@@ -43,9 +43,9 @@ Funcionalidade: Login
     Quando for realizado o clique no botao sign in
     Entao o sistema devera exibir uma mensagem de erro
     Exemplos:
-      | identificacao    | usuario      | senha    | false |
-      | usuario invalido | invalido     | Ieda123  | false |
-      | senha invalida   | misericordia | invalida | false |
+      | identificacao    | usuario   | senha    | false |
+      | usuario invalido | invalido  | Ieda321  | false |
+      | senha invalida   | marcosval | invalida | false |
 
   @dadosEmBranco
   Esquema do Cenario: Realizar login com <identificacao>
@@ -56,6 +56,6 @@ Funcionalidade: Login
       | remember | <false>   |
     Entao o botao sign in deve permanecer desabilitado
     Exemplos:
-      | identificacao     | usuario      | senha   | remember |
-      | usuario em branco |              | Ieda123 | false    |
-      | senha em branco   | misericordia |         | false    |
+      | identificacao     | usuario   | senha   | remember |
+      | usuario em branco |           | Ieda321 | false    |
+      | senha em branco   | marcosval |         | false    |
